@@ -40,4 +40,4 @@ To run it, put the four `yellow_tripdata_2026-0X.parquet` files in `data/` and r
 - Task parallelism 2: 9 independent (learning rate × L2) trials, with the best chosen on validation, not on April.
 - Test result: MAE 3.78 pickups per zone-hour (19.5% of demand), better than "same hour last week" (MAE 4.13).
 
-To run it, run `part1_data_pipeline.ipynb` first (it writes the demand table), then the Part 2 notebook.
+To run it, run `part1_data_pipeline.ipynb` first (it writes the demand table), then `person2_sections.ipynb`.
