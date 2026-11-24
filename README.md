@@ -23,3 +23,21 @@ Topic: Demand Forecasting
 
 To run it, put the four `yellow_tripdata_2026-0X.parquet` files in `data/` and run the notebook
 (or `python -m src.cleaning`). On Rockhill the data is found automatically.
+
+## Part 2: Features, model and task parallelism (Cormac)
+
+| File | What it does/is |
+|---|---|
+| `person2_sections.ipynb` | Notebook sections 3 (features), 4 (gradient computation), 5 (hyperparameter search) and 8 (final test) |
+| `src/features.py` | Lag, rolling and calendar features, time-based splits, scaling |
+| `src/model.py` | Linear regression by gradient descent, parallel gradient, parallel grid search |
+
+- Forecasts pickups per zone per hour from `results/demand_zone_hour.parquet`, using 13 features: lags (1, 2, 3,
+  24, 48, 168 h), rolling mean and spread, and calendar and holiday flags. Each feature only uses earlier hours.
+- Develops on Jan–Mar with four rolling validation folds and tests on April once. All settings come from `config.py`.
+- Task parallelism 1: the gradient is computed on 6 zone shards and summed in shard order (all-reduce), and the
+  result is checked to match the sequential run.
+- Task parallelism 2: 9 independent (learning rate × L2) trials, with the best chosen on validation, not on April.
+- Test result: MAE 3.78 pickups per zone-hour (19.5% of demand), better than "same hour last week" (MAE 4.13).
+
+To run it, run `part1_data_pipeline.ipynb` first (it writes the demand table), then the Part 2 notebook.
