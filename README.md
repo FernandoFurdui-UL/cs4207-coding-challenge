@@ -1,12 +1,12 @@
 # CS4207 Coding Challenge: Group 24
 
-Fernando Furdui · Cormac Allen · James Buckley
+Fernando Furdui - Cormac Allen - James Buckley
 
-Topic: hourly taxi demand forecasting on NYC Yellow Taxi data (Jan–Apr 2026).
+Topic: Demand Forecasting
 
 ## Part 1: Data pipeline (Fernando)
 
-| File | What it is |
+| File | What it does/is |
 |---|---|
 | `part1_data_pipeline.ipynb` | Notebook: setup, cleaning, data parallelism |
 | `src/cleaning.py` | Cleaning rules, sharding, parallel clean-and-count, merge |
